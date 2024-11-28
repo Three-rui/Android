@@ -410,7 +410,8 @@ public class OutputText extends Activity {
         NoteEditor.this.startActivity(intent);
     }
 ### 4.UI美化
-列表颜色变换
+
+### （1）列表颜色变换
 在NotePad.java中添加
        
 	public static final String COLUMN_NAME_BACK_COLOR = "color";
@@ -449,11 +450,13 @@ static 中：
 	    values.put(NotePad.Notes.COLUMN_NAME_BACK_COLOR, NotePad.Notes.DEFAULT_COLOR);
         }
 在NotePad.java中定义：
-        public static final int DEFAULT_COLOR = 0; //white
-	public static final int YELLOW_COLOR = 1; //yellow
-        public static final int BLUE_COLOR = 2; //blue
-        public static final int GREEN_COLOR = 3; //green
-         public static final int RED_COLOR = 4; //red
+      public class NotePad {
+    public static final int DEFAULT_COLOR = 0; // white
+    public static final int YELLOW_COLOR = 1; // yellow
+    public static final int BLUE_COLOR = 2; // blue
+    public static final int GREEN_COLOR = 3; // green
+    public static final int RED_COLOR = 4; // red
+}
 
 自定义一个MyCursorAdapter.java继承SimpleCursorAdapter ，将颜色填充到ListView 。
     package com.example.android.notepad;
@@ -539,15 +542,13 @@ static 中：
         case R.id.menu_color:
             changeColor();
             break;
-在NoteEditor.java中添加函数changeColor ：	    
-   //Jump to the activity changing the color and transfer the URI information to the new activity
-    private final void changeColor() {
-        Intent intent = new Intent(null,mUri);
-        intent.setClass(NoteEditor.this,NoteColor.class);
-        NoteEditor.this.startActivity(intent);
-    }
- 新建布局note_color.xml，垂直线性布局放置5个ImageButton ，对选择颜色界面进行布局
-
+    // 在NoteEditor.java中添加函数changeColor
+private final void changeColor() {
+    Intent intent = new Intent(null, mUri);
+     Intent intent = new Intent(NoteEditor.this, mUri);
+    intent.setData(mUri); 
+    NoteEditor.this.startActivity(intent);
+}
      <?xml version="1.0" encoding="utf-8"?>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
@@ -760,6 +761,8 @@ static 中：
             android:theme="@android:style/Theme.Holo.Light.Dialog"
             android:label="ChangeColor"
             android:windowSoftInputMode="stateVisible"/>
+
+### （2）改变字体大小和颜色
 在menu文件夹中editoe_option_menu.xml里添加两段代码，分别用于字体大小和颜色：
 <item
         android:title="字体颜色">
@@ -817,7 +820,7 @@ static 中：
      break;
 
      
-主题背景更换
+### （3）主题背景更换
 
 
       <item
